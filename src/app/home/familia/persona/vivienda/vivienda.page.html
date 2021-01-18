@@ -1,0 +1,116 @@
+<ion-content scroll-y='false' class="crecer">
+  <div class="crecer">
+    <form [formGroup]='viviendaForm' (ngSubmit)='addVivienda()'>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Condición de la Vivienda:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='CondicionVivienda'
+              [selectedText]='viviendaForm.value.CondicionVivienda'>
+              <ion-select-option value="PROPIA">PROPIA</ion-select-option>
+              <ion-select-option value="ALQUILADA">ALQUILADA</ion-select-option>
+              <ion-select-option value="PRESTADA">PRESTADA</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Número de familias que viven en la vivienda</ion-label>
+            <ion-input type='number' formControlName='NumeroFamilias' maxlength='2'></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Número de Integrantes de la familia</ion-label>
+            <ion-input type='number' formControlName='NumeroIntegrantes' maxlength='2'></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>HCL</ion-label>
+            <ion-input type='text' formControlName='HCL'></ion-input>
+          </ion-item>
+        </ion-col>
+        
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Acondicionamiento de la Vivienda:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='AcondicionamientoVivienda'
+              [selectedText]='viviendaForm.value.AcondicionamientoVivienda' multiple>
+              <ion-select-option value="DORMITORIO">DORMITORIO</ion-select-option>
+              <ion-select-option value="COMEDOR">COMEDOR</ion-select-option>
+              <ion-select-option value="COCINA">COCINA</ion-select-option>
+              <ion-select-option value="BAÑO">BAÑO</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Distancia al Centro Médico:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='DistanciaCentroMedico'
+              [selectedText]='viviendaForm.value.DistanciaCentroMedico'>
+              <ion-select-option value="MENOR A 5KM [0]-Puntos">MENOR A 5KM [0]-Puntos
+              </ion-select-option>
+              <ion-select-option value="MAYOR A 5KM [1]-Punto">MAYOR A 5KM [1]-Punto</ion-select-option>
+              <ion-select-option value="MAYOR A 10KM [1.5]-Puntos">MAYOR A 10KM [1.5]-Puntos</ion-select-option>
+              <ion-select-option value="MAYOR A 20KM [2]-Puntos">MAYOR A 20KM [2]-Puntos
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Servicios con los que NO cuenta la vivienda:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='ServiciosVivienda'
+              [selectedText]='viviendaForm.value.ServiciosVivienda' multiple>
+              <ion-select-option value="NO TIENE AGUA [1]-Punto">NO TIENE AGUA [1]-Punto
+              </ion-select-option>
+              <ion-select-option value="NO TIENE LUZ [0.5]-Puntos">NO TIENE LUZ [0.5]-Puntos</ion-select-option>
+              <ion-select-option value="NO TIENE DESAGÜE [1]-Punto">NO TIENE DESAGÜE [1]-Punto
+              </ion-select-option>
+              <ion-select-option value="CUENTA CON TODOS LOS SERVICIOS [0]-Puntos">CUENTA CON TODOS LOS SERVICIOS
+                [0]-Puntos
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Nivel de Nacimiento:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='NivelNacimiento'
+              [selectedText]='viviendaForm.value.NivelNacimiento'>
+              <ion-select-option value="2X1 [0]-Puntos">2X1 [0]-Puntos
+              </ion-select-option>
+              <ion-select-option value="3X1 [1]-Punto">3X1 [1]-Punto</ion-select-option>
+              <ion-select-option value="4X1 [1.5]-Puntos">4X1 [1.5]-Puntos
+              </ion-select-option>
+              <ion-select-option value="5X1 [2]-Puntos">5X1 [2]-Puntos
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-button type='submit' expand='block' [disabled]="!viviendaForm.valid">Siguiente</ion-button>        
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+</ion-content>

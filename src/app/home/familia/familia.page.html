@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Familia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title>FAMILIA</ion-title>
+      <ion-fab-button type='button' slot='end' size='small' (click)='refresh()' color='success'>
+        <ion-icon name='refresh-outline'>
+        </ion-icon>
+      </ion-fab-button>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-searchbar placeholder='Ingrese valor a buscar:' type='text' (keyup)='filtrar($event)'></ion-searchbar>
+      <ion-fab-button class="hidden-sm-up" type='button' slot='end' size='small' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+      </ion-fab-button>
+
+      <ion-button class="hidden-xs-down" type='button' slot='end' size='default' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+        <ion-label> Agregar</ion-label>
+      </ion-button>
+    </ion-item>
+
+    <ngx-datatable class="material" [rows]="familias" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+      [rowHeight]="50" [scrollbarV]="true" [scrollbarH]="true" #myTable>
+
+      <ngx-datatable-row-detail [rowHeight]="370">
+        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+          <div class="card-familia">
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'>Fecha y Hora Entrevista</ion-label>
+                <ion-input type='text' disabled>
+                  {{ row.FechaEntrevista | date : 'dd/MM/yyyy HH:mm:ss' }}
+                </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>DNI</ion-label>
+                <ion-input type='number' disabled>{{ row.DNI}}</ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'>Apellidos y Nombres</ion-label>
+                <ion-input type='text' disabled>{{ row.ApellidoPaterno}} {{ row.ApellidoMaterno}} {{row.Nombres }}
+                </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>Condición de la Vivienda</ion-label>
+                <ion-input type='text' disabled>{{ row.CondicionVivienda }}</ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'>Dirección</ion-label>
+                <ion-input type='text' disabled>{{ row.Direccion}}, {{ row.CentroPoblado }} - {{row. Distrito}}
+                </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>Nivel de Nacimiento</ion-label>
+                <ion-input type='text' disabled>{{ row.NivelNacimiento}}</ion-input>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'>Nro de Familias que viven en la vivienda</ion-label>
+                <ion-input type='text' disabled>{{ row.NumeroFamilias }}</ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>Nro de Integrantes</ion-label>
+                <ion-input type='text' disabled>{{ row.NumeroIntegrantes}}</ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'>Servicios con los que cuenta la vivienda</ion-label>
+                <ion-input type='text' disabled>{{ row.ServiciosVivienda}}</ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>Distancia al Centro Médico</ion-label>
+                <ion-input type='text' disabled>{{ row.DistanciaCentroMedico}}</ion-input>
+              </ion-col>
+
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'> Acondicionamiento de la Vivienda</ion-label>
+                <ion-input type='text' disabled>{{ row.AcondicionamientoVivienda}}</ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-label position='stacked'>Entrevistador</ion-label>
+                <ion-input type='text' disabled>{{ row.NombreEntrevistador}}</ion-input>
+              </ion-col>
+
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position='stacked'> HCL</ion-label>
+                <ion-input type='text' disabled>{{ row.HCL}}</ion-input>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ng-template>
+      </ngx-datatable-row-detail>
+
+      <ngx-datatable-column name='DNI TITULAR' prop="DNI" [frozenLeft]='true' [width]='100'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-note color='primary' (click)='detalleFamilia(row)'>
+            {{ row.DNI }}
+          </ion-note>
+
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. PATERNO' prop="ApellidoPaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. MATERNO' prop="ApellidoMaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='NOMBRE TITULAR' prop="Nombres">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='CENTRO POBLADO' prop="CentroPoblado">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='PUNTAJE TOTAL' prop="PuntajeTotal">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='DIAGNÓSTICO' prop="Diagnostico">
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-note [color]='(row.Diagnostico === "RIESGO BAJO") ? "success" : ((row.Diagnostico === "RIESGO MODERADO") ? "warning" : "danger ")' (click)='detalleFamilia(row)'>
+            {{ row.Diagnostico }}
+          </ion-note>
+
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name='ACCIONES' [sortable]='false'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+
+          <ion-button (click)='seePersonas(row)' size='small' color='tertiary'>
+            <ion-icon name="eye-sharp"></ion-icon>
+          </ion-button>
+
+          <ion-button (click)='seeConsolidado(row)' size='small' color='medium'>
+            <ion-icon name="logo-electron"></ion-icon>
+          </ion-button>
+
+          <ion-button (click)='delFamilia(row)' size='small' color='danger'>
+            <ion-icon name='trash'></ion-icon>
+          </ion-button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </ion-card-content>
+</ion-content>

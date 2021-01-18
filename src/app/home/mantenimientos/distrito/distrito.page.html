@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Distrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title>DISTRITO</ion-title>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-searchbar placeholder='Ingrese valor a buscar:' type='text' (keyup)='filtrar($event)'></ion-searchbar>
+      <ion-fab-button class="hidden-sm-up" type='button' slot='end' size='small' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+      </ion-fab-button>
+
+      <ion-button class="hidden-xs-down" type='button' slot='end' size='default' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+        <ion-label> Agregar</ion-label>
+      </ion-button>
+    </ion-item>
+    <ion-card *ngIf="show" class="content-details">
+      <ion-card-content>
+        <form [formGroup]='distritoForm' (ngSubmit)='modify ? updateDistrito() : addDistrito()'>
+          <ion-item>
+            <ion-label position='stacked'>Ingrese nombre del Distrito</ion-label>
+            <ion-input clearInput maxlength='30' type='text' formControlName='NombreDistrito'></ion-input>
+          </ion-item>
+
+          <ion-row>
+            <ion-col *ngIf='!modify'>
+              <ion-button type='submit' expand='block' [disabled]="!distritoForm.valid">Guardar</ion-button>
+            </ion-col>
+            <ion-col *ngIf='modify'>
+              <ion-button type='submit' expand='block' color='success'
+                [disabled]="!distritoForm.valid">Modificar</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-card-content>
+
+    </ion-card>
+
+    <ngx-datatable class="material" [rows]="distritos" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+      [rowHeight]="50" [scrollbarV]="true">
+      <ngx-datatable-column name='DISTRITO' prop="NombreDistrito" [sortable]='true'>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='ACCIONES' [sortable]='false'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-button (click)='mod(row)' size='small'  color='success'>
+            <ion-icon name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button (click)='delDistrito(row)' size='small'  color='danger'>
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+
+         
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </ion-card-content>
+</ion-content>

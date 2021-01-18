@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>PACIENTES BD LOCAL</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title>PACIENTES BD LOCAL</ion-title>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <p>
+        Esta tabla muestra la lista de personas registradas en programas sociales, mismos datos fueron entregados por la municipalidad. En algunos casos están incompletos.
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-searchbar placeholder='Ingrese valor a buscar:' type='text' (keyup)='filtrar($event)'></ion-searchbar>
+    </ion-item>
+
+    <ngx-datatable class="material" [rows]="arreglo" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="80"
+    [rowHeight]="50" [scrollbarV]="true" [scrollbarH]="true">
+      <ngx-datatable-column name='DNI' prop="DNI" [sortable]='true'>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. PATERNO' prop="ApellidoPaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. MATERNO' prop="ApellidoMaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='NOMBRES' prop="Nombres">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='CENTRO POBLADO' prop="Comunidad">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='DISTRITO' prop="Distrito">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='FECHA NACIMIENTO' prop="FechaNacimiento">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='PROGRAMA SOCIAL' prop="ProgramaSocial">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='CODIGO HOGAR' prop="CodigoHogar">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='VINCULO FAMILIAR' prop="VinculoFamiliar">
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </ion-card-content>
+
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title>PACIENTES REGISTRADOS EN APLICATIVO</ion-title>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <p>
+        Esta tabla muestra la lista de personas registradas en el aplicativo.
+      </p>
+    </ion-item>
+    <ion-item>
+      <ion-searchbar placeholder='Ingrese valor a buscar:' type='text' (keyup)='filtrarPacientesAplicativo($event)'></ion-searchbar>
+      <ion-fab-button type='button' slot='end' size='small' (click)='refresh()' color='success'>
+        <ion-icon name='refresh-outline'>
+        </ion-icon>
+      </ion-fab-button>
+    </ion-item>
+
+    <ngx-datatable class="material" [rows]="personas" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="80"
+    [rowHeight]="50" [scrollbarV]="true" [scrollbarH]="true">
+      <ngx-datatable-column name='DNI' prop="DNI" [sortable]='true'>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. PATERNO' prop="ApellidoPaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='AP. MATERNO' prop="ApellidoMaterno">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='NOMBRES' prop="Nombres">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='CENTRO POBLADO' prop="CentroPoblado">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='DISTRITO' prop="Distrito">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='FECHA NACIMIENTO' prop="FechaNacimiento">
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          {{ row.FechaNacimiento | date:'dd/MM/yyy' }}
+      </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='PROGRAMA SOCIAL' prop="ProgramaSocial">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='CODIGO HOGAR' prop="CodigoHogar">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='VINCULO FAMILIAR' prop="VinculoFamiliar">
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </ion-card-content>
+</ion-content>

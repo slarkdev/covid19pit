@@ -1,0 +1,186 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Realizar Triaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title class="hidden-xs-down">
+        CARTILLA DE DIAGNÓSTICO DE PACIENTES
+      </ion-title>
+      <ion-title class="hidden-sm-up">TRIAJE</ion-title>
+      <ion-fab-button *ngIf='idOpcion === "see"' type='button' slot='end' size='small' (click)='download()' color='danger'>
+        <ion-icon name='cloud-download'>
+        </ion-icon>
+      </ion-fab-button>
+    </ion-toolbar>
+    <ion-toolbar color='primary'>
+      <ion-row>
+        <ion-col>
+          <ion-label><strong> FECHA: {{ triajePersona.Fecha | date:'dd/MM/yyy HH:mm:ss'}} </strong></ion-label>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-label (click)='volverTriajes()'>
+            <ion-icon name="arrow-back-outline" slot='start'></ion-icon>
+            Volver a Triajes
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+    <ion-toolbar color='primary' (click)='showDatos=!showDatos'>
+      <ion-row>
+        <ion-col size=8>
+          <ion-label> DATOS DEL PACIENTE: {{ persona.Nombres}} {{ persona.ApellidoPaterno }}
+            {{ persona.ApellidoMaterno}}
+          </ion-label>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-chip outline color='light'>
+            <ion-label>(click)</ion-label>
+            <ion-icon name='chevron-down-outline' *ngIf='!showDatos'></ion-icon>
+            <ion-icon name='chevron-up-outline' *ngIf='showDatos'></ion-icon>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-card-header>
+  <div *ngIf='showDatos'>
+
+    <ion-row>
+      <ion-col size='8' size-sm='12' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Nombres</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Nombres}} {{ persona.ApellidoPaterno }} {{ persona.ApellidoMaterno}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position='fixed'>DNI</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.DNI}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position='fixed'>Domicilio</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Direccion }}-{{ persona.CentroPoblado }}-{{ persona.Distrito}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm='6' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Integrante</ion-label>
+
+          <ion-input disabled type='text'>
+            {{ persona.VinculoFamiliar }}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-sm='12' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Teléfono</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Telefono ? persona.Telefono : "No registró Teléfono"}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' (click)='showSintomas=!showSintomas'>
+      <ion-row>
+        <ion-col size=8>
+          <ion-label>SÍNTOMAS</ion-label>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-chip outline color='light'>
+            <ion-label>(click)</ion-label>
+            <ion-icon name='chevron-down-outline' *ngIf='!showSintomas'></ion-icon>
+            <ion-icon name='chevron-up-outline' *ngIf='showSintomas'></ion-icon>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-card-header>
+  <div>
+    <ngx-datatable *ngIf='showSintomas' color='primary' #myTable class="material expandable"
+      [rows]="triajePersona.Items" [groupRowsBy]="'TipoSintoma'" [columnMode]="'force'" [headerHeight]="50"
+      rowHeight="auto" [footerHeight]="50" [scrollbarH]="true" [limit]="6" [groupExpansionDefault]="false">
+
+      <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader>
+        <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+          <ion-toolbar color='medium' (click)="expandir(group)" class="ion-text-center">
+            <ion-label> <strong>
+                GRUPO SÍNTOMAS: {{ group.value[0].TipoSintoma }}
+              </strong></ion-label>
+            <ion-icon name='chevron-down-outline' slot='end' *ngIf='!expanded; else condicion'></ion-icon>
+            <ng-template #condicion>
+              <ion-icon name='chevron-up-outline' slot='end'></ion-icon>
+            </ng-template>
+
+          </ion-toolbar>
+        </ng-template>
+      </ngx-datatable-group-header>
+
+      <ngx-datatable-column name='SÍNTOMA' prop="Item" [width]='150'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+
+          <ion-label>{{ row.Item }} </ion-label>
+          <ion-note [color]="row.Estado ? 'primary' : 'medium'">({{ row.Puntos}} Puntos)</ion-note>
+
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name='ESTADO' prop="Estado" [width]='55'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <div class="estado">
+            <ion-toggle color="success" [(ngModel)]='row.Estado' (ionChange)='updateSintoma(row)'
+              [disabled]='idOpcion === "see"'></ion-toggle>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name='VALOR' [width]='200'>
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-item (ionBlur)='calcularIMC(row)' (ionFocus)='limpiar(row)'>
+            <ion-note position='fixed' color='primary'>Valor: </ion-note>
+            <ion-input type='text' [disabled]='idOpcion === "see" || !row.Estado' color='primary'
+              [(ngModel)]="row.Valor"></ion-input>
+            <ion-note slot='end' [color]="row.Estado ? 'primary' : 'danger'"> {{ row.Medida }} </ion-note>
+          </ion-item>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary'>
+      <ion-row>
+        <ion-col size=8>
+          <ion-label>PUNTAJE PERSONA: </ion-label>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-label>{{ triajePersona.PuntajeParcial }} Puntos</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-row>
+    <ion-col>
+      <ion-button *ngIf='idOpcion === "add"' color='primary' expand='block' (click)='save()'> GUARGAR </ion-button>
+      <ion-button *ngIf='idOpcion === "mod"' color='success' expand='block' (click)='save()'> MODIFICAR </ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

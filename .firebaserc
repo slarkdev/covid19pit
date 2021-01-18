@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "censo-app-ec818": {
+      "hosting": {
+        "app": [
+          "censo-app-ec818"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+<ion-content scroll-y='false'>
+  <div>
+    <form [formGroup]='socioeconomicasForm' (ngSubmit)='addSocioeconomicas()'>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Nivel de instrucción:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='NivelInstruccion'
+              [selectedText]='socioeconomicasForm.value.NivelInstruccion'>
+              <ion-select-option value="NINGUNA">NINGUNA(NO SABE LEER NI ESCRIBIR)</ion-select-option>
+              <ion-select-option value="PRIMARIA">PRIMARIA</ion-select-option>
+              <ion-select-option value="SECUNDARIA">SECUNDARIA</ion-select-option>
+              <ion-select-option value="SUPERIOR">SUPERIOR</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Ocupación o actividad principal
+            </ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='Ocupacion'
+              [selectedText]='socioeconomicasForm.value.Ocupacion'>
+              <ion-select-option value="AGRICULTOR">AGRICULTOR</ion-select-option>
+              <ion-select-option value="GANADERO">GANADERO</ion-select-option>
+              <ion-select-option value="COMERCIANTE">COMERCIANTE</ion-select-option>
+              <ion-select-option value="EMPLEADO PÚBLICO/PRIVADO">EMPLEADO PÚBLICO/PRIVADO</ion-select-option>
+              <ion-select-option value="TRANSPORTISTA">TRANSPORTISTA</ion-select-option>
+              <ion-select-option value="CONSTRUCTOR">CONSTRUCTOR</ion-select-option>
+              <ion-select-option value="ESTUDIANTE">ESTUDIANTE</ion-select-option>
+              <ion-select-option value="OTROS">OTROS</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Estimación de Ingresos Económicos Mensuales:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='IngresosEconomicos'
+              [selectedText]='socioeconomicasForm.value.IngresosEconomicos'>
+              <ion-select-option value="NINGUNO">NINGUNO</ion-select-option>
+              <ion-select-option value="DE 100 A 150">DE 100 A 150</ion-select-option>
+              <ion-select-option value="DE 501 A 1000">DE 501 A 1000</ion-select-option>
+              <ion-select-option value="DE 1001 A MAS">DE 1001 A MÁS</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+
+          <ion-item>
+            <ion-label position='stacked'>Situación Económica durante la pandemia:</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='SituacionEconomica'
+              [selectedText]='socioeconomicasForm.value.SituacionEconomica'>
+              <ion-select-option value="Los ingresos económicos se matuvieron">Los ingresos económicos se matuvieron
+              </ion-select-option>
+              <ion-select-option value="Se redujeron a la mitad">Se redujeron a la mitad</ion-select-option>
+              <ion-select-option value="Se redujeron a menos de la mitad">Se redujeron a menos de la mitad
+              </ion-select-option>
+              <ion-select-option value="Ya no existen ingresos">Ya no existen ingresos</ion-select-option>
+              <ion-select-option value="Ninguno">Ninguno</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type='submit' expand='block' [disabled]="!socioeconomicasForm.valid">Siguiente</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
+</ion-content>

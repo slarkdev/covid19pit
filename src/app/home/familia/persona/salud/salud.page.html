@@ -1,0 +1,43 @@
+<ion-content scroll-y='false'>
+  <div>
+    <form [formGroup]='saludForm' (ngSubmit)='addSalud()'>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Servicios Médicos con los que cuenta</ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='ServiciosMedicos'
+              [selectedText]='saludForm.value.ServiciosMedicos'>
+              <ion-select-option value="SIS">SIS</ion-select-option>
+              <ion-select-option value="ESSALUD">ESSALUD</ion-select-option>
+              <ion-select-option value="OTROS">OTROS</ion-select-option>
+              <ion-select-option value="NINGUNO">NINGUNO</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Frecuencia de Atención en Servicios Médicos
+            </ion-label>
+            <ion-select okText="OK" cancelText="CANCELAR" formControlName='FrecuenciaAtencion'
+              [selectedText]='saludForm.value.FrecuenciaAtencion'>
+              <ion-select-option value="MENSUALMENTE">MENSUALMENTE</ion-select-option>
+              <ion-select-option value="SEMESTRALMENTE">SEMESTRALMENTE</ion-select-option>
+              <ion-select-option value="ANUALMENTE">ANUALMENTE</ion-select-option>
+
+              <ion-select-option value="SOLO CUANDO SE ENFERMA">SOLO CUANDO SE ENFERMA</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button type='submit' expand='block' [disabled]="!saludForm.valid">Guardar Todo</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

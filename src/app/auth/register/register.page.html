@@ -1,0 +1,40 @@
+<ion-header color='primary' class="ion-text-center">
+  <ion-toolbar color='primary'>
+    <ion-title>
+      <ion-icon name="home-outline"></ion-icon>
+      COVID-19 PITUMARCA
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color='primary'>
+    <ion-title>Registrarse</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]='registerForm' (ngSubmit)='onRegister()'>
+    <ion-item>
+      <ion-label position='floating'>Nombres</ion-label>
+      <ion-input type='text' formControlName='nombres' required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position='floating'>Email</ion-label>
+      <ion-input type='email' formControlName='email' required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position='floating'>Password</ion-label>
+      <ion-input type='password' formControlName='password' required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type='submit' expand='block' [disabled]='!registerForm.valid'>Registrarse</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <ion-row>
+    <ion-col class="ion-text-end">
+      <p>¿Tiene una cuenta? <a [routerLink]="['/login']">Iniciar Sesión </a></p>
+    </ion-col>
+  </ion-row>
+</ion-content>

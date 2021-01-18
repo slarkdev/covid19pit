@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Triaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title>
+        TRIAJES
+      </ion-title>
+      <ion-fab-button type='button' slot='end' size='small' (click)='refresh()' color='success'>
+        <ion-icon name='refresh-outline'>
+        </ion-icon>
+      </ion-fab-button>
+    </ion-toolbar>
+    <ion-toolbar color='primary' class="ion-text-end">
+      <ion-row>
+        <ion-col>
+          <ion-label (click)='volverPersonas()'>
+            <ion-icon name="arrow-back-outline" slot='start'></ion-icon>
+            Volver a Personas
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+    <ion-toolbar color='primary' (click)='showDatos=!showDatos'>
+      <ion-row>
+        <ion-col size=8>
+          <ion-label> DATOS DEL PACIENTE: {{ persona.Nombres}} {{ persona.ApellidoPaterno }} {{ persona.ApellidoMaterno}}
+          </ion-label>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-chip outline color='light'>
+            <ion-label>(click)</ion-label>
+            <ion-icon name='chevron-down-outline' *ngIf='!showDatos'></ion-icon>
+            <ion-icon name='chevron-up-outline' *ngIf='showDatos'></ion-icon>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-card-header>
+  <div *ngIf='showDatos'>
+
+    <ion-row>
+      <ion-col size='8' size-sm='12' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Nombres</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Nombres}} {{ persona.ApellidoPaterno }} {{ persona.ApellidoMaterno}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position='fixed'>DNI</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.DNI}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position='fixed'>Domicilio</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Direccion }}-{{ persona.CentroPoblado }}-{{ persona.Distrito}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm='6' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Integrante</ion-label>
+
+          <ion-input disabled type='text'>
+            {{ persona.VinculoFamiliar }}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-sm='12' size-xs='12'>
+        <ion-item>
+          <ion-label position='fixed'>Teléfono</ion-label>
+          <ion-input disabled type='text'>
+            {{ persona.Telefono ? persona.Telefono : "No registró Teléfono"}}
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+  
+  <ion-card-content>
+
+    <ion-item>
+      <ion-searchbar placeholder='Ingrese valor a buscar:' type='text' (keyup)='filtrar($event)'></ion-searchbar>
+      <ion-fab-button class="hidden-sm-up" type='button' slot='end' size='small' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+      </ion-fab-button>
+
+      <ion-button class="hidden-xs-down" type='button' slot='end' size='default' (click)='add()'>
+        <ion-icon name='add'>
+        </ion-icon>
+        <ion-label> Agregar</ion-label>
+      </ion-button>
+    </ion-item>
+
+    <ngx-datatable class="material" [rows]="triajes" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+      rowHeight="auto" [reorderable]='true'>
+
+      <ngx-datatable-column name='FECHA' prop="Fecha">
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-note color='primary'>
+            {{ row.Fecha | date:'dd/MM/yyy HH:mm:ss' }}
+          </ion-note>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name='ENTREVISTADOR' prop="Entrevistador">
+      </ngx-datatable-column>
+      <ngx-datatable-column name='ACCIONES' [sortable]='false'>
+
+        <ng-template let-row='row' ngx-datatable-cell-template>
+          <ion-button (click)='see(row)' size='small' color='tertiary'>
+            <ion-icon name='eye-outline'></ion-icon>
+          </ion-button>
+          <ion-button (click)='mod(row)' size='small' color='success'>
+            <ion-icon name='pencil'></ion-icon>
+          </ion-button>
+          <ion-button (click)='del(row)' size='small' color='danger'>
+            <ion-icon name='trash'></ion-icon>
+          </ion-button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </ion-card-content>
+</ion-content>

@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color='primary' class="ion-text-center">
+    <ion-title>
+      <ion-icon name="home-outline"></ion-icon>
+      COVID-19 PITUMARCA
+    </ion-title>
+    <ion-buttons slot='start'>
+      <ion-menu-button menu='main-menu'></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-menu side="start" type="push" menuId='main-menu' content-id='main'>
+    <ion-header (click)='goHome()'>
+      <ion-toolbar color='primary'>        
+        <ion-title class="ion-text-center"> COVID-19 PITUMARCA</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar color='primary'>        
+        <ion-title class="ion-text-center">{{user ? user.displayName : ''}}</ion-title>
+      </ion-toolbar>
+      <ion-toolbar color='primary'>        
+        <ion-title class="ion-text-center">{{user ? user.email : ''}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+      <ion-list lines="none">
+        <ion-menu-toggle auto-hide="true">
+
+          <ion-item (click)='familia()'>
+            <ion-icon name="home-outline" slot='start'></ion-icon>
+            <ion-label>Familia</ion-label>
+          </ion-item>
+
+          <ion-item (click)='personas()'>
+            <ion-icon name="man-outline" slot='start'></ion-icon>
+            <ion-label>Consultar Personas</ion-label>
+          </ion-item>
+
+        </ion-menu-toggle>
+
+        <ion-item (click)="show === false ? show = true : show = false">
+          <ion-icon name="construct-outline" slot='start'></ion-icon>
+          <ion-label>Mantenimientos</ion-label>
+          <ion-icon slot="end" [name]="show? 'chevron-down-outline' : 'chevron-up-outline'"></ion-icon>
+        </ion-item>
+        <ion-menu-toggle auto-hide="true" >
+          <ion-list lines="none" [hidden]="!show" class="submenu">
+            <ion-item (click)='sintoma()'>
+              <ion-icon name="fitness-outline" slot='start'></ion-icon>
+              <ion-label>Síntomas</ion-label>
+            </ion-item>
+
+            <ion-item (click)='tipoSintoma()'>
+              <ion-icon name="bandage-outline" slot='start'></ion-icon>
+              <ion-label>Tipos de Síntomas</ion-label>
+            </ion-item>
+
+
+            <!-- <ion-item (click)='factoresAnexos()'>
+              <ion-icon name="color-wand-outline" slot='start'></ion-icon>
+              <ion-label>Factores Anexos</ion-label>
+            </ion-item>
+
+            <ion-item (click)='tipoFactoresAnexos()'>
+              <ion-icon name="bonfire-outline" slot='start'></ion-icon>
+              <ion-label>Tipo Factores Anexos</ion-label>
+            </ion-item> -->
+
+            <ion-item (click)='centroPoblado()'>
+              <ion-icon name="golf-outline" slot='start'></ion-icon>
+              <ion-label>Centros Poblados</ion-label>
+            </ion-item>
+
+            <ion-item (click)='distrito()'>
+              <ion-icon name="location-outline" slot='start'></ion-icon>
+              <ion-label>Distritos</ion-label>
+            </ion-item>
+
+            <ion-item (click)='programaSocial()'>
+              <ion-icon name="pricetags-outline" slot='start'></ion-icon>
+              <ion-label>Programas Sociales</ion-label>
+            </ion-item>
+
+            <ion-item (click)='vinculoFamiliar()'>
+              <ion-icon name="people-outline" slot='start'></ion-icon>
+              <ion-label>Vínculos Familiares</ion-label>
+            </ion-item>
+
+          </ion-list>
+        </ion-menu-toggle>
+
+        <ion-item (click)='logout()'>
+          <ion-icon name="arrow-undo-outline" slot="start"></ion-icon>
+          <ion-label>Cerrar Sesión</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+</ion-content>

@@ -1,0 +1,266 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Detalle Persona</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header color='primary'>
+    <ion-toolbar color='primary' class="ion-text-center">
+      <ion-title> {{ isTitular ? 'TITULAR DE FAMILIA' : 'PERSONA'}}</ion-title>
+    </ion-toolbar>
+    <ion-toolbar color='primary' (click)='volver()' class="ion-text-end">
+      <ion-label *ngIf='idFamilia != "add"'>
+        <ion-icon name="arrow-back-outline" slot='start'></ion-icon>
+        Volver a Personas
+      </ion-label>
+      <ion-label *ngIf='idFamilia == "add"'>
+        <ion-icon name="arrow-back-outline" slot='start'></ion-icon>
+        Volver a Familias
+      </ion-label>
+    </ion-toolbar>
+    <ion-row color='primary'>
+      <ion-col>
+        FAMILIA DE: {{ familia?.ApellidoPaterno}} {{ familia?.ApellidoMaterno}} {{ familia?.Nombres}}
+      </ion-col>
+      <ion-col>
+        DNI TITULAR: {{ familia?.DNI }}
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+
+  <ion-card-header [color]="personaForm.valid ? 'primary' : 'medium' ">
+    <ion-toolbar [color]="personaForm.valid ? 'primary' : 'medium' " (click)='showA=!showA'>
+      <ion-row>
+        <ion-col size='10'>
+          <ion-title> SECCIÓN A: DATOS GENERALES</ion-title>
+        </ion-col>
+        <ion-col>
+          <ion-icon name='chevron-down-outline' *ngIf='!showA'></ion-icon>
+          <ion-icon name='chevron-up-outline' *ngIf='showA'></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content *ngIf='showA'>
+    <form [formGroup]='personaForm' (ngSubmit)='obtenerPersona()'>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Fecha y Hora Entrevista</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY HH:mm:ss" pickerFormat='DD/MMM/YYYY HH:mm:ss' disabled
+              formControlName='FechaEntrevista' placeholder="Seleccionar" yearValues='2020'
+              monthValues='06,07,08,09,10,11,12' doneText='Listo'>
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>DNI</ion-label>
+            <ion-input type='number' formControlName='DNI' maxlength="8" (keyup)='buscarPersona($event)'></ion-input>
+          </ion-item>
+          <p *ngIf="personaForm.controls['DNI'].dirty && messageError != ''" color="danger" padding> {{ messageError }}</p>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Nombres</ion-label>
+            <ion-input type='text' formControlName='Nombres' maxlength='100'></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Apellido Paterno</ion-label>
+            <ion-input type='text' formControlName='ApellidoPaterno' maxlength='50'></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Apellido Materno</ion-label>
+            <ion-input type='text' formControlName='ApellidoMaterno' maxlength='50'></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Fecha Nacimiento</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat='DD/MMM/YYYY' formControlName='FechaNacimiento'
+              placeholder="Seleccionar" doneText='Listo'>
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item class="edad">
+            <ion-label position='stacked'>Edad</ion-label>
+            <ion-input type='number' formControlName='Edad' disabled [value]='calcularEdad()'>
+            </ion-input>
+            <ion-note slot="end" color="primary" class="note">Años</ion-note>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Teléfono/Celular(*Opcional)</ion-label>
+            <ion-input type='number' formControlName='Telefono'></ion-input>
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Codigo Hogar(*Opcional)</ion-label>
+            <ion-input type='text' formControlName='CodigoHogar'></ion-input>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='fixed'>Género</ion-label>
+            <ion-segment value="FEMENINO" formControlName='Genero'>
+              <ion-segment-button value="FEMENINO">
+                <ion-label>FEMENINO</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="MASCULINO">
+                <ion-label>MASCULINO</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Dirección o Sector</ion-label>
+            <ion-input type='text' formControlName='Direccion'></ion-input>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Distrito</ion-label>
+            <ion-select placeholder="Seleccionar" formControlName='Distrito'
+              [selectedText]='personaForm.value.Distrito'>
+              <ion-select-option *ngFor="let d of distritos" [value]="d.NombreDistrito">{{d.NombreDistrito}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Centro Poblado</ion-label>
+            <ion-select placeholder="Seleccionar" formControlName='CentroPoblado'
+              [selectedText]='personaForm.value.CentroPoblado'>
+              <ion-select-option *ngFor="let cp of centrosPoblados" [value]="cp.NombreCentroPoblado">
+                {{cp.NombreCentroPoblado}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Vinculo Familiar</ion-label>
+            <ion-select placeholder="Seleccionar" formControlName='VinculoFamiliar'
+              [selectedText]='personaForm.value.VinculoFamiliar'>
+              <ion-select-option *ngFor="let vf of vfs" [value]="vf.NombreVinculoFamiliar">
+                {{vf.NombreVinculoFamiliar}}
+              </ion-select-option>
+
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position='stacked'>Programa Social</ion-label>
+            <ion-select placeholder="Seleccionar" formControlName='ProgramaSocial'
+              [selectedText]='personaForm.value.ProgramaSocial' multiple>
+
+              <ion-select-option *ngFor="let ps of pss" [value]="ps.NombreProgramaSocial">
+                {{ps.NombreProgramaSocial}}
+              </ion-select-option>
+
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button type='submit' expand='block' [disabled]="!personaForm.valid">Siguiente</ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </form>
+
+  </ion-card-content>
+
+  <ion-card-header [color]="viviendaForm.valid ? 'primary' : 'medium' " *ngIf='isTitular'>
+    <ion-toolbar [color]="viviendaForm.valid ? 'primary' : 'medium' " (click)='showB=!showB'>
+      <ion-row>
+        <ion-col size='10'>
+          <ion-title> SECCIÓN B: CONDICIONES DE Y SOBRE LA VIVIENDA</ion-title>
+        </ion-col>
+        <ion-col>
+          <ion-icon name='chevron-down-outline' *ngIf='!showB'></ion-icon>
+          <ion-icon name='chevron-up-outline' *ngIf='showB'></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+    </ion-toolbar>
+
+  </ion-card-header>
+  <ion-card-content *ngIf='showB && isTitular'>
+    <app-vivienda [viviendaForm]='viviendaForm' (datos)='obtenerVivienda($event)'></app-vivienda>
+  </ion-card-content>
+
+  <ion-card-header [color]="socioeconomicasForm.valid ? 'primary' : 'medium' ">
+    <ion-toolbar [color]="socioeconomicasForm.valid ? 'primary' : 'medium' " (click)='showC=!showC'>
+      <ion-row>
+        <ion-col size='10'>
+          <ion-title> SECCIÓN C: CONDICIONES SOCIOECONÓMICAS</ion-title>
+        </ion-col>
+        <ion-col>
+          <ion-icon name='chevron-down-outline' *ngIf='!showC'></ion-icon>
+          <ion-icon name='chevron-up-outline' *ngIf='showC'></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+    </ion-toolbar>
+  </ion-card-header>
+  
+  <ion-card-content *ngIf='showC'>
+    <app-socioeconomicas [socioeconomicasForm]='socioeconomicasForm' (datos)='obtenerSocioeconomicas($event)'></app-socioeconomicas>
+  </ion-card-content>
+
+  <ion-card-header [color]="saludForm.valid ? 'primary' : 'medium' ">
+    <ion-toolbar [color]="saludForm.valid ? 'primary' : 'medium' " (click)='showD=!showD'>
+      <ion-row>
+        <ion-col size='10'>
+          <ion-title> SECCIÓN D: CONDICIONES DE SALUD</ion-title>
+        </ion-col>
+        <ion-col>
+          <ion-icon name='chevron-down-outline' *ngIf='!showD'></ion-icon>
+          <ion-icon name='chevron-up-outline' *ngIf='showD'></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content *ngIf='showD'>
+    <app-salud [saludForm]='saludForm' (datos)='obtenerSalud($event)'></app-salud>
+  </ion-card-content>
+</ion-content>
